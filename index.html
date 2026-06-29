@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חומר גלם — בית לשפת הגוף</title>
+<meta name="description" content="חומר גלם — בית לשפת הגוף. מרחב למחול, תנועה, גוף ויצירה בהנחיית נטע רוזנצוויג.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Assistant:wght@300;400;600&family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --taupe: #b6a591;
+    --paper: #f3ecdf;
+    --green: #3e4a33;
+    --coffee: #7b5e45;
+    --rose: #bd928a;
+    --ink: #34302a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Assistant', sans-serif;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--paper);
+    direction: rtl;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; right: 0; left: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    background: rgba(243,236,223,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(182,165,145,0.3);
+  }
+
+  .nav-logo {
+    font-family: 'Suez One', serif;
+    font-size: 1.15rem;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Assistant', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--green); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--green);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; right: 0; left: 0;
+    background: var(--paper);
+    border-bottom: 1px solid rgba(182,165,145,0.4);
+    z-index: 99;
+    padding: 20px 32px 28px;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .mobile-menu a {
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Assistant', sans-serif;
+  }
+
+  /* ── HERO ── */
+  #top {
+    min-height: 100svh;
+    background: var(--taupe);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-blob {
+    position: absolute;
+    bottom: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 220px;
+    background: var(--paper);
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+
+  .hero-logo {
+    width: min(260px, 60vw);
+    margin-bottom: 24px;
+    filter: drop-shadow(0 4px 16px rgba(62,74,51,0.18));
+  }
+
+  .hero-tagline {
+    font-family: 'Amatic SC', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    color: var(--green);
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-sub {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--coffee);
+    font-weight: 300;
+    margin-bottom: 36px;
+    opacity: 0.9;
+  }
+
+  .hero-dancer {
+    margin: 0 auto 36px;
+    width: min(180px, 45vw);
+    opacity: 0.9;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--green);
+    color: var(--paper);
+    font-family: 'Assistant', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 40px;
+    letter-spacing: 0.03em;
+    transition: background 0.25s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--coffee); transform: translateY(-2px); }
+
+  /* ── SECTION BASE ── */
+  section { padding: 80px 24px; }
+
+  .section-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.35rem;
+    color: var(--rose);
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Suez One', serif;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    color: var(--green);
+    line-height: 1.25;
+    margin-bottom: 24px;
+  }
+
+  .divider {
+    width: 48px; height: 3px;
+    background: var(--rose);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--paper); }
+
+  .about-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+
+  .about-quote {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.7rem;
+    color: var(--coffee);
+    line-height: 1.5;
+    border-right: 3px solid var(--rose);
+    padding-right: 20px;
+    margin-top: 12px;
+  }
+
+  .about-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-logo {
+    width: min(280px, 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 32px rgba(123,94,69,0.18);
+  }
+
+  /* ── CLASSES ── */
+  #classes { background: var(--green); }
+  #classes h2, #classes .eyebrow { color: var(--paper); }
+  #classes .divider { background: var(--rose); }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .card {
+    background: rgba(243,236,223,0.08);
+    border: 1px solid rgba(243,236,223,0.2);
+    border-radius: 16px;
+    padding: 32px 24px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .card:hover { background: rgba(243,236,223,0.13); transform: translateY(-4px); }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .card h3 {
+    font-family: 'Suez One', serif;
+    font-size: 1.2rem;
+    color: var(--paper);
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    color: rgba(243,236,223,0.75);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .card-detail {
+    font-size: 0.85rem;
+    color: var(--rose);
+    font-weight: 600;
+  }
+
+  /* ── SHOW ── */
+  #show { background: var(--taupe); text-align: center; }
+
+  .show-inner {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .show-inner p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    color: var(--ink);
+  }
+
+  .show-inner .btn-primary {
+    background: var(--coffee);
+  }
+  .show-inner .btn-primary:hover { background: var(--green); }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--paper); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .gallery-cell {
+    aspect-ratio: 1 / 1;
+    background: var(--taupe);
+    border-radius: 10px;
+    overflow: hidden;
+    opacity: 0.55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amatic SC', cursive;
+    font-size: 0.9rem;
+    color: var(--green);
+  }
+
+  .gallery-note {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.88rem;
+    color: var(--coffee);
+    opacity: 0.7;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--green);
+    text-align: center;
+  }
+
+  #contact h2 { color: var(--paper); }
+  #contact .eyebrow { color: var(--rose); }
+  #contact .divider { background: var(--rose); margin: 0 auto 28px; }
+
+  .contact-intro {
+    font-size: 1.05rem;
+    color: rgba(243,236,223,0.8);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 36px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 28px;
+    border-radius: 40px;
+    font-size: 0.97rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s, opacity 0.2s;
+    font-family: 'Assistant', sans-serif;
+  }
+  .contact-link:hover { transform: translateY(-2px); opacity: 0.88; }
+
+  .contact-link.instagram { background: var(--rose); color: var(--paper); }
+  .contact-link.phone { background: var(--coffee); color: var(--paper); }
+  .contact-link.mail { background: rgba(243,236,223,0.15); color: var(--paper); border: 1px solid rgba(243,236,223,0.3); }
+
+  .contact-logo-wrap {
+    margin-top: 20px;
+  }
+  .contact-logo {
+    width: 100px;
+    opacity: 0.7;
+    filter: brightness(0) invert(1);
+  }
+
+  footer {
+    text-align: center;
+    padding: 18px;
+    background: rgba(62,74,51,0.95);
+    font-size: 0.8rem;
+    color: rgba(243,236,223,0.45);
+  }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 880px) {
+    .about-body { grid-template-columns: 1fr; }
+    .about-visual { order: -1; }
+    .cards { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 540px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 60px 20px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#top" class="nav-logo">חומר גלם</a>
+  <ul class="nav-links">
+    <li><a href="#about">המקום</a></li>
+    <li><a href="#classes">שיעורים</a></li>
+    <li><a href="#show">המופע</a></li>
+    <li><a href="#gallery">גלריה</a></li>
+    <li><a href="#contact">צרו קשר</a></li>
+  </ul>
+  <button class="hamburger" aria-label="תפריט" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#about">המקום</a></li>
+    <li><a href="#classes">שיעורים</a></li>
+    <li><a href="#show">המופע</a></li>
+    <li><a href="#gallery">גלריה</a></li>
+    <li><a href="#contact">צרו קשר</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="top">
+  <div class="hero-blob" aria-hidden="true"></div>
+
+  <img src="assets/chomergelem-logo-circle.png"
+       alt="חומר גלם — בית לשפת הגוף"
+       class="hero-logo">
+
+  <p class="hero-tagline">~ משהו חדש מתחיל ~</p>
+  <p class="hero-sub">מרחב למחול · תנועה · גוף · יצירה</p>
+
+  <!-- SVG רקדנית -->
+  <svg class="hero-dancer" viewBox="0 0 120 220" fill="none"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- ראש -->
+    <circle cx="60" cy="22" r="13" stroke="white" stroke-width="2.2" fill="none"/>
+    <!-- גוף -->
+    <line x1="60" y1="35" x2="60" y2="105" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- זרוע שמאל למעלה -->
+    <path d="M60 55 Q35 38 18 22" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <!-- זרוע ימין למטה -->
+    <path d="M60 60 Q82 72 100 90" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <!-- רגל שמאל — מרימה -->
+    <path d="M60 105 Q45 135 28 155 Q18 170 14 190" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <!-- רגל ימין — נשענת -->
+    <path d="M60 105 Q68 140 72 175 Q74 195 74 210" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  </svg>
+
+  <a href="#about" class="btn-primary">גלי את המרחב</a>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-body">
+      <div class="about-text reveal">
+        <span class="eyebrow">~ המקום ~</span>
+        <h2>הגוף הוא חומר גלם</h2>
+        <div class="divider"></div>
+        <p>
+          חומר גלם הוא מרחב שנוצר מתוך האמונה שכל אחת נושאת בתוכה שפה משלה — שפת הגוף.
+          כאן אנחנו לומדות להקשיב לה, לתת לה להתרחב, לאפשר לה לדבר.
+        </p>
+        <p>
+          דרך מחול, תנועה ועבודת גוף, נטה מלווה נשים ונערות לגלות מה יש כאן יותר
+          מהגוף הזה — ולאפשר לו להיות חומר גלם שמקבל צורה.
+        </p>
+        <blockquote class="about-quote">
+          "יש כאן יותר<br>מהגוף הזה"
+        </blockquote>
+      </div>
+      <div class="about-visual reveal">
+        <img src="assets/chomergelem-logo-cotton.png"
+             alt="לוגו חומר גלם עם פרחי כותנה"
+             class="about-logo">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes">
+  <div class="section-inner">
+    <span class="eyebrow reveal">~ שיעורים ~</span>
+    <h2 class="reveal">מה מחכה לך כאן</h2>
+    <div class="divider reveal"></div>
+    <div class="cards">
+      <div class="card reveal">
+        <span class="card-icon" aria-hidden="true">🌿</span>
+        <h3>מחול מודרני לנערות</h3>
+        <p>שיעורים שבועיים שמאפשרים לנערות לגלות את הגוף שלהן דרך תנועה ויצירה — בחופש, בביטחון ובכיף.</p>
+        <span class="card-detail">TODO: גיל / יום / שעה</span>
+      </div>
+      <div class="card reveal">
+        <span class="card-icon" aria-hidden="true">✦</span>
+        <h3>תנועה וגוף לנשים</h3>
+        <p>מפגשים לנשים שרוצות להתחבר לגוף מחדש — דרך תנועה עדינה, נשימה ועבודה פנימית.</p>
+        <span class="card-detail">TODO: גיל / יום / שעה</span>
+      </div>
+      <div class="card reveal">
+        <span class="card-icon" aria-hidden="true">◯</span>
+        <h3>סדנאות</h3>
+        <p>סדנאות מיוחדות לאורך השנה — שילוב של תנועה, יצירה ועומק. לכל מי שמחפשת חוויה שלמה.</p>
+        <span class="card-detail">TODO: מועדים קרובים</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOW -->
+<section id="show">
+  <div class="show-inner">
+    <span class="eyebrow reveal">~ המופע ~</span>
+    <h2 class="reveal">מקום לאהבה</h2>
+    <div class="divider reveal" style="margin:0 auto 28px;"></div>
+    <p class="reveal">
+      מופע סיום שנה מרגש — התרגשות מהדחינות, מזמינה אותך להיות חלק.
+      הגוף כמרחב של אהבה, יצירה ונוכחות מלאה.
+    </p>
+    <a href="https://instagram.com/homer.gelem" target="_blank" rel="noopener"
+       class="btn-primary reveal">לעקוב באינסטגרם</a>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <span class="eyebrow reveal">~ גלריה ~</span>
+    <h2 class="reveal">רגעים מהמרחב</h2>
+    <div class="divider reveal"></div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-cell">תמונה 1</div>
+      <div class="gallery-cell">תמונה 2</div>
+      <div class="gallery-cell">תמונה 3</div>
+      <div class="gallery-cell">תמונה 4</div>
+      <div class="gallery-cell">תמונה 5</div>
+      <div class="gallery-cell">תמונה 6</div>
+      <div class="gallery-cell">תמונה 7</div>
+      <div class="gallery-cell">תמונה 8</div>
+    </div>
+    <p class="gallery-note">תמונות אמיתיות יתווספו בקרוב</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <span class="eyebrow reveal">~ צרו קשר ~</span>
+    <h2 class="reveal">בואי נדבר</h2>
+    <div class="divider reveal"></div>
+    <p class="contact-intro reveal">
+      שאלות? רוצה להירשם? סקרנית?<br>
+      אשמח לשמוע ממך.
+    </p>
+    <div class="contact-links reveal">
+      <a href="https://instagram.com/homer.gelem" target="_blank" rel="noopener"
+         class="contact-link instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        @homer.gelem
+      </a>
+      <a href="tel:+972500000000" class="contact-link phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        TODO: טלפון
+      </a>
+      <a href="mailto:hello@chomergelem.com" class="contact-link mail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        hello@chomergelem.com
+      </a>
+    </div>
+    <div class="contact-logo-wrap reveal">
+      <img src="assets/chomergelem-logo-circle.png"
+           alt="חומר גלם"
+           class="contact-logo">
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 חומר גלם — בית לשפת הגוף · כל הזכויות שמורות
+</footer>
+
+<script>
+  // hamburger
+  const btn = document.querySelector('.hamburger');
+  const menu = document.getElementById('mobileMenu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
