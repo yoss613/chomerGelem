@@ -328,13 +328,20 @@
     background: var(--taupe);
     border-radius: 10px;
     overflow: hidden;
-    opacity: 0.55;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Amatic SC', cursive;
-    font-size: 0.9rem;
-    color: var(--green);
+  }
+
+  .gallery-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-cell:hover img {
+    transform: scale(1.05);
   }
 
   .gallery-note {
@@ -575,16 +582,13 @@
     <h2 class="reveal">רגעים מהמרחב</h2>
     <div class="divider reveal"></div>
     <div class="gallery-grid reveal">
-      <div class="gallery-cell">תמונה 1</div>
-      <div class="gallery-cell">תמונה 2</div>
-      <div class="gallery-cell">תמונה 3</div>
-      <div class="gallery-cell">תמונה 4</div>
-      <div class="gallery-cell">תמונה 5</div>
-      <div class="gallery-cell">תמונה 6</div>
-      <div class="gallery-cell">תמונה 7</div>
-      <div class="gallery-cell">תמונה 8</div>
+      <div class="gallery-cell"><img src="assets/IMG_7911.jpeg" alt="חומר גלם — תנועה"></div>
+      <div class="gallery-cell"><img src="assets/IMG_7912.jpeg" alt="חומר גלם — תנועה"></div>
+      <div class="gallery-cell"><img src="assets/IMG_7913.jpeg" alt="חומר גלם — תנועה"></div>
+      <div class="gallery-cell"><img src="assets/IMG_7914.jpeg" alt="חומר גלם — תנועה"></div>
+      <div class="gallery-cell"><img src="assets/IMG_7915.jpeg" alt="חומר גלם — תנועה"></div>
+      <div class="gallery-cell"><img src="assets/IMG_7916.jpeg" alt="חומר גלם — תנועה"></div>
     </div>
-    <p class="gallery-note">תמונות אמיתיות יתווספו בקרוב</p>
   </div>
 </section>
 
